@@ -1,3 +1,4 @@
+# %% imports
 import numpy as np
 import pandas as pd
 import matplotlib as plt
@@ -6,9 +7,9 @@ import matplotlib as plt
 # Using Python REPL to run lines (shift-Enter), main.py will use print statements to show results when running main.py in the terminal.
 # Referencing O'Reilly's "Python Data Science Handbook" by Jake VanderPlas
 
-# NumPy
+# %% NumPy 
 rng = np.random.default_rng(seed=5757) # rng seed
-# Arrays
+# %% Arrays
 np.zeros(10, dtype=int) # Array of zeroes
 np.ones((3,5),dtype=float)
 np.full((2,4), 5.7) # Filled Array
@@ -25,28 +26,28 @@ twodim.ndim # number of dimensions
 twodim.shape # size of each dimension
 twodim.size # size of array
 twodim.dtype # type of each element
-# Subarrays
+# %% Subarrays
 twodim[:2] # show first two lines
 twodim[2:] # show lines after first two
 twodim[1] # show 1st index (second row)
-# Multi-Dimensional Subarrays
+# %% Multi-Dimensional Subarrays
 twodim[:2, :3] # first two rows, first three cols
 twodim[:3, ::2] # first three rows, every other col
 subtwodim = twodim[:2, ::2] # saving a subarray copy
-# Reshaping Arrays
+# %% Reshaping Arrays
 np.arange(1,10).reshape((3,3)) # Reshaped array
 toreshape = np.arange(1,4)
 toreshape.reshape((1,3))
 toreshape[np.newaxis, :]
 toreshape.reshape((3,1))
 toreshape[:, np.newaxis]
-# Concatenation
+# %% Concatenation
 x = np.arange(1,3)
 y = np.arange(5,9)
 np.concatenate([x,y])
 np.concatenate([twodim, twodim])
 np.concatenate([twodim, twodim], axis=1)
-# Splitting
+# %% Splitting
 upper, lower = np.vsplit(twodim, [2])
 upper
 lower
@@ -54,11 +55,30 @@ left,right=np.hsplit(twodim,[2])
 left
 right
 ## dsplit would split along a third axis.
+# %% UFuncs - universal functions / vectorized operations
+def compute_reciprocals(values):
+    output=np.empty(len(values))
+    for i in range(len(values)):
+        output[i]=1.0/values[i]
+    return output
 
+values = np.random.randint(1,10,size=5)
+compute_reciprocals(values) # this normal loop is very slow with big values
+big_array = np.random.randint(1,100,size=1000000)
+%timeit compute_reciprocals(big_array)
+%timeit (1.0 / big_array) # ufunc
+%timeit np.reciprocal(big_array.astype(float)) # ufunc
+
+# %% Aggregations
+
+
+# %%
 # Pandas
 spectrum = pd.read_csv("spectrum.csv")
 "CSV Output:"
 spectrum
 spectrum.shape
 
+# %%
 #Matplotlib
+
